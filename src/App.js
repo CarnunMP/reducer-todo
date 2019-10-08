@@ -3,7 +3,6 @@ import { reducer, initialState, actionTypes } from "./reducers/reducer";
 import './App.css';
 import TodoList from './components/TodoList';
 import uuid from "uuid";
-import { ECONNRESET } from 'constants';
 
 function App() {
   const [{listItems, newItemFormValue}, dispatch] = useReducer(reducer, initialState);
@@ -27,13 +26,21 @@ function App() {
     });
   };
 
+  const toggleComplete = event => {
+    dispatch({
+      type: actionTypes.TOGGLE_COMPLETE,
+      payload: { id: event.target.parentElement.id },
+    })
+  };
+
   return (
     <div className="App">
       <TodoList 
         listItems={listItems} 
         newItemFormValue={newItemFormValue} 
         onValueChange={onValueChange} 
-        addNewItem={addNewItem} 
+        addNewItem={addNewItem}
+        toggleComplete={toggleComplete}
       />
     </div>
   );

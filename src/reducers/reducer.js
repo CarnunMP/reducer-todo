@@ -24,6 +24,7 @@ export const initialState = {
 export const actionTypes = {
     ON_VALUE_CHANGE: "ON_VALUE_CHANGE",
     ADD_NEW_ITEM: "A_NEW_ITEM",
+    TOGGLE_COMPLETE: "TOGGLE_COMPLETE",
 }
 
 export function reducer(state, action) {
@@ -37,6 +38,15 @@ export function reducer(state, action) {
             return {
                 listItems: [...state.listItems, action.payload],
                 newItemFormValue: "",
+            }
+        case actionTypes.TOGGLE_COMPLETE:
+            let newItemsState = state.listItems;
+            const itemToToggleIndex = newItemsState.findIndex(item => item.id === action.payload.id);
+            newItemsState[itemToToggleIndex].complete = !newItemsState[itemToToggleIndex].complete;
+            
+            return {
+                listItems: newItemsState,
+                newItemFormValue: state.newItemFormValue,
             }
         default:
             return state;
