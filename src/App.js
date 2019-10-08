@@ -26,10 +26,17 @@ function App() {
     });
   };
 
-  const toggleComplete = event => {
+  const toggleCompleted = event => {
     dispatch({
       type: actionTypes.TOGGLE_COMPLETE,
       payload: { id: event.target.parentElement.id },
+    })
+  };
+
+  const clearCompleted = () => {
+    dispatch({
+      type: actionTypes.CLEAR_COMPLETED,
+      payload: { listItems: listItems.filter(item => !item.completed) },
     })
   };
 
@@ -40,8 +47,11 @@ function App() {
         newItemFormValue={newItemFormValue} 
         onValueChange={onValueChange} 
         addNewItem={addNewItem}
-        toggleComplete={toggleComplete}
+        toggleCompleted={toggleCompleted}
       />
+      <button className="clear-completed" onClick={clearCompleted}>
+        Clear Completed
+      </button>
     </div>
   );
 }
